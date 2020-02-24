@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Grant/CS1B/CS1B-LINKEDLISTS/ULL.h
+iostream
+-
+windows.h
+-
+
+C:/Users/Grant/CS1B/CS1B-LINKEDLISTS/functionsource.cpp
+ULL.h
+C:/Users/Grant/CS1B/CS1B-LINKEDLISTS/ULL.h
+
+C:/Users/Grant/CS1B/CS1B-LINKEDLISTS/main.cpp
+iostream
+-
+
