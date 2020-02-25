@@ -9,7 +9,8 @@ void initLinkedList(nodeType *&head, nodeType *&tail, int &count) {
 
 
 
-// inserts <data> into a new node in the linked list specified by head and tail
+// inserts data into a node that is appended at the end of a linked list, specified
+// by pointers head and tail
 void insertLinkedList(nodeType *&head, nodeType *&tail, int &count, int data) {
 	
 	// temp pointer to the new node
@@ -23,13 +24,22 @@ void insertLinkedList(nodeType *&head, nodeType *&tail, int &count, int data) {
 	
 	// empty list case
 	if (head == nullptr) {
+	    // give the value of newNode to head and tail
+	    // this is the address of the node created in this function, pointed to
+	    // by newNode
 		head = newNode;
 		tail = newNode;
 	}
 	// non empty list
 	else {
+	    // if not empty, we do not bother changing head.
+	    // tail currently points to last of list, so the pointer in that
+	    // last node needs to point to new node
 		tail->next 	= newNode;
-		tail 		= newNode;	
+
+		// with "last" node now pointing to newNode, the actual tail needs to point
+		// to newNode so newNode can become the "last node".
+		tail = newNode;
 	}
 	count ++;
 	
@@ -43,8 +53,8 @@ void printLinkedList(nodeType *head, nodeType *tail) {
 	current = head;
 	
 	while (current != nullptr) {
-		cout << current->info << " ";
-		current = current->next;
-	}
-	cout << "nullptr\n";
+        cout << &current->info << "\t" << current->info << endl;
+        current = current->next;
+    }
+	cout << endl;
 }
