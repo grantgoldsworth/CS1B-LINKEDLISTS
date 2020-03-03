@@ -11,7 +11,7 @@ void initLinkedList(nodeType *&head, nodeType *&tail, int &count) {
 
 // inserts data into a node that is appended at the end of a linked list, specified
 // by pointers head and tail
-void insertLinkedList(nodeType *&head, nodeType *&tail, int &count, int data) {
+void tailInsertLinkedList(nodeType *&head, nodeType *&tail, int &count, int data) {
 	
 	// temp pointer to the new node
 	nodeType *newNode = nullptr;
@@ -34,7 +34,7 @@ void insertLinkedList(nodeType *&head, nodeType *&tail, int &count, int data) {
 	else {
 	    // if not empty, we do not bother changing head.
 	    // tail currently points to last of list, so the pointer in that
-	    // last node needs to point to new node
+	    // (now second to) last node needs to point to new node
 		tail->next 	= newNode;
 
 		// with "last" node now pointing to newNode, the actual tail needs to point
@@ -45,6 +45,39 @@ void insertLinkedList(nodeType *&head, nodeType *&tail, int &count, int data) {
 	
 }
 
+void insertLinkedList(nodeType *& head, nodeType *& tail, int & count, int position, int data) {
+    nodeType *newNode;
+    nodeType *current;
+
+    current = head;
+    newNode = new nodeType;
+    newNode->info = data;
+
+    if (position <= -1 || position > count) {
+        cout << "Error: cannot add node to that position.\n";
+        delete newNode;
+    }
+    else if (position == 0) {
+        newNode->next = head;
+        head = newNode;
+        if (count == 0) {
+            tail = newNode;
+        }
+        count ++;
+    }
+    else if (position == count) {
+        tailInsertLinkedList(head, tail, count, data);
+    }
+    else {
+        for (int i = 0; i < position - 1; i ++) {
+            current = current->next;
+        }
+        newNode->next = current->next;
+        current->next = newNode;
+        count ++;
+    }
+
+}
 
 // traverses ll and prints node data
 void printLinkedList(nodeType *head, nodeType *tail) {

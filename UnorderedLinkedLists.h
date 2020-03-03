@@ -14,9 +14,12 @@ struct nodeType {
 
 void initLinkedList(nodeType *&, nodeType *&, int &);
 
-void insertLinkedList(nodeType *&, nodeType *&, int &, int);
+void tailInsertLinkedList(nodeType *&, nodeType *&, int &, int);
+
+void insertLinkedList(nodeType *&, nodeType *&, int &, int, int);
 
 void printLinkedList(nodeType *, nodeType *);
+
 
 
 #endif
