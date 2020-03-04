@@ -11,14 +11,32 @@ struct nodeType {
 	nodeType *next;
 };
 
+char GetChoice(int, int);
 
-void initLinkedList(nodeType *&, nodeType *&, int &);
+
+void initializeList(nodeType *&, nodeType *&, int &);
+//Initialize the list to an empty state.
+//Postcondition: head = nullptr, head = nullptr, count = 0;
+
+bool isEmptyList(const nodeType *);
+//Function to determine whether the list is empty.
+//Postcondition: Returns true if the list is empty,
+// otherwise it returns false.
+
+void print(const nodeType *);
+
+int  length(); 
+
+void destroyList(nodeType *&, nodeType *&, int &);
+
+void insertFirst(nodeType *&, nodeType *&, int &, const int &);
 
 void tailInsertLinkedList(nodeType *&, nodeType *&, int &, int);
 
 void insertLinkedList(nodeType *&, nodeType *&, int &, int, int);
 
-void printLinkedList(nodeType *, nodeType *);
+void deleteNode();
+
 
 
 

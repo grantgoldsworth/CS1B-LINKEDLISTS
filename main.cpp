@@ -3,44 +3,55 @@
 int main() {
 
     system("cls");
-
-    nodeType *head;
-    nodeType *tail;
-
-    int userElements;
-    int count;
-    int userData;
-    int position;
-
-    // create the empty linked list with a head and tail to same obj
-    initLinkedList(head, tail, count);
-
-
-    // obtain user input and stuff it into new nodes of the linked list
-    cout << "How many elements would you like to enter into the int linked list? ";
-    cin  >> userElements;
-
-    for (int i = 0; i < userElements; i ++) {
-        cout << "Enter an integer: ";
-        cin  >> userData;
-        tailInsertLinkedList(head, tail, count, userData);
-    }
-    cout << "\nContents of linked list: \n";
-    printLinkedList(head, tail);
-
-    cout << "\n\nEnter position to have new node take place of [0-" << count << "]: ";
-    cin >> position;
-
-    cout << "Enter data for the new node: ";
-    cin >> userData;
-
-    insertLinkedList(head, tail, count, position, userData);
-
-    // output contents of the linked list
-    cout << "\nContents of linked list: \n";
-    printLinkedList(head, tail);
-
-
-    system("pause");
+	
+	char choice;
+	
+	do {
+		
+		cout << "\n\t\t-----[ LINKED LIST STUFF ]-----\n\n";
+		cout << "[1] initializeList\n";
+		cout << "[2] isEmptyList\n";
+		cout << "[3] print\n";
+		cout << "[4] destroyList\n";
+		cout << "[5] insertList\n";
+		cout << "[6] ight imma head out\n\n";
+		
+		
+		choice = GetChoice(1, 6);
+		cout << endl;
+		
+		switch (choice) {
+			
+			case '1':
+				cout << "initializeList call \n\n";
+				break;
+			
+			case '2':
+				cout << "isEmptyList call\n\n";
+				break;
+				
+			case '3':
+				cout << "print call\n\n";
+				break;
+				
+			case '4':
+				cout << "destroyList call\n\n";
+				break;
+				
+			case '5':
+				cout << "insertList call \n\n";
+				break;
+			
+			default:
+				break;
+		}
+		
+		cout << endl;
+		system("pause");
+		system("cls");
+		
+	}while (choice != '6');
+	
+	
     return 0;
 }
