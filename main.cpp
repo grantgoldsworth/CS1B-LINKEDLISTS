@@ -97,7 +97,7 @@ int main() {
 			    else {
                     cout << "Contents of the list:\n";
                     cout << "[ ";
-                    print(head);
+                    print(*head);
                     cout << "]\n";
 
 			    }

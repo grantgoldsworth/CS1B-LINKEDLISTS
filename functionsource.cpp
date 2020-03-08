@@ -127,10 +127,10 @@ bool isEmptyList(const nodeType *head) {
 
 //Function to output the data contained in each node.
 //Postcondition: none
-void print(const nodeType* head) {
+void print(const nodeType head) {
 
 	const nodeType *current = nullptr;
-	current = head;
+	current = &head;
 
 
         while (current != nullptr) {

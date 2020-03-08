@@ -30,7 +30,7 @@ bool isEmptyList(const nodeType *);
 //Postcondition: Returns true if the list is empty,
 // otherwise it returns false.
 
-void print(const nodeType*);
+void print(const nodeType);
 //Function to output the data contained in each node.
 //Postcondition: none
 
