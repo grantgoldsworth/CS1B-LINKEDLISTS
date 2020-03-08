@@ -46,7 +46,7 @@ void initializeList(nodeType *&head, nodeType *&tail, int &count) {
 //Postcondition: Returns true if the list is empty,
 // otherwise it returns false.
 bool isEmptyList(const nodeType *head) {
-		return (head == null);
+		return (head == nullptr);
 }
 
 
@@ -54,48 +54,36 @@ bool isEmptyList(const nodeType *head) {
 
 //Function to output the data contained in each node.
 //Postcondition: none
-void print(const nodeType *head) {
-	nodeType *current = nullptr;
-	
+void print(const nodeType* head) {
+
+	const nodeType *current = nullptr;
 	current = head;
-	while (current != nullptr) {
-		cout << current->info << " ";
-		current = current->next;
-	}
-	cout << endl;
+
+
+        while (current != nullptr) {
+            cout << current->info << " ";
+            current = current->next;
+        }
+
+
 }
 
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
-// COPY COMMENTS FROM THE BOOK
+
 
 //Function to return the number of nodes in the list.
 //Postcondition: The value of count is returned.
-int  length(const nodeType *head){
-	int l = 0;
-	
-	nodeType *current;
-	current = head;
-	
-	while (current != nullptr) {
-		l ++;
-	}
-	return l;
+int  length(const nodeType head){
+
+    int l;
+    const nodeType *current = nullptr;
+    current = &head;
+
+    l = 0;
+    while (current != nullptr) {
+        l ++;
+        current = current->next;
+    }
+    return l;
 }
 
 
@@ -103,16 +91,11 @@ int  length(const nodeType *head){
 //Function to delete all the nodes from the list.
 //Postcondition: first = nullptr, last = nullptr, count = 0;
 void destroyList(nodeType *&head, nodeType *&tail, int &count) {
-	
-	nodeType *current;
-	current = head;
-	
-	while (current != nullptr) {
-		current = head;
-		head    = head->next;
-		delete current;
-	}
-	
+
+    while (head != nullptr) {
+        deleteNode(head);
+    }
+
 	tail = nullptr;
 	count = 0;
 }
@@ -124,60 +107,43 @@ void destroyList(nodeType *&head, nodeType *&tail, int &count) {
 // inserted at the beginning of the list,
 // last points to the last node in the list,
 // and count is incremented by 1.
-void insertFirst(nodeType *&head, nodeType *&tail, int &count, const int &newItem) {
-	
-	nodeType *newNode;
-	
-	newNode = new nodeType;
-	
-	newNode->info = newItem;
-	newNode->next = nullptr;
-	
-}
+void insertFirst(nodeType *&head, nodeType *&tail, int &count, const int & newItem) {
 
+    // temp pointer to the new node
+    nodeType *newNode = nullptr;
 
-
-
-void insertLinkedList(nodeType *& head, nodeType *& tail, int & count, int position, int data) {
-    nodeType *newNode;
-    nodeType *current;
-
-    current = head;
     newNode = new nodeType;
-    newNode->info = data;
 
-    if (position <= -1 || position > count) {
-        cout << "Error: cannot add node to that position.\n";
-        delete newNode;
-    }
-    else if (position == 0) {
-        newNode->next = head;
+    // ASSIGN DATA INTO NODE
+    newNode->info = newItem;
+    newNode->next = nullptr;
+
+    // empty list case
+    if (head == nullptr) {
+        // give the value of newNode to head and tail
+        // this is the address of the node created in this function, pointed to
+        // by newNode
         head = newNode;
-        if (count == 0) {
-            tail = newNode;
-        }
-        count ++;
+        tail = newNode;
     }
-    else if (position == count) {
-        tailInsertLinkedList(head, tail, count, data);
-    }
+        // non empty list
     else {
-        for (int i = 0; i < position - 1; i ++) {
-            current = current->next;
-        }
-        newNode->next = current->next;
-        current->next = newNode;
-        count ++;
+        newNode-> next = head;
+        head = newNode;
     }
+    count ++;
+
 
 }
 
 
 
-
-// inserts data into a node that is appended at the end of a linked list, specified
-// by pointers head and tail
-void tailInsertLinkedList(nodeType *&head, nodeType *&tail, int &count, int data) {
+//Function to insert newItem at the beginning of the list.
+//Postcondition: first points to the new list, newItem is
+// inserted at the beginning of the list,
+// last points to the last node in the list,
+// and count is incremented by 1.
+void insertLast(nodeType *&head, nodeType *&tail, int &count, const int& newItem) {
 	
 	// temp pointer to the new node
 	nodeType *newNode = nullptr;
@@ -185,7 +151,7 @@ void tailInsertLinkedList(nodeType *&head, nodeType *&tail, int &count, int data
 	newNode = new nodeType;
 	
 	// ASSIGN DATA INTO NODE
-	newNode->info = data;
+	newNode->info = newItem;
 	newNode->next = nullptr;
 	
 	// empty list case
@@ -209,4 +175,18 @@ void tailInsertLinkedList(nodeType *&head, nodeType *&tail, int &count, int data
 	}
 	count ++;
 	
+}
+
+void deleteNode(nodeType *& head) {
+    nodeType * current;
+    current = head;
+
+    if(isEmptyList((head))) {
+        cout << "List is empty. Nothing to delete.\n";
+    }
+    else {
+        current = head;
+        head = head->next;
+        delete current;
+    }
 }
