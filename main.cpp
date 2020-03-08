@@ -64,11 +64,7 @@ int main() {
 		cout << "[6] insertFirst\n";
 		cout << "[7] insertLast\n";
 		cout << "[8] Exit\n\n";
-
-		cout << "LIST: [ ";
-		print(head);
-		cout << "]\n\n";
-
+		
 		choice = GetChoice(1, 8);
 		cout << endl;
 		
