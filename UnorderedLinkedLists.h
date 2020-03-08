@@ -1,3 +1,10 @@
+/*******************************************
+ * AUTHOR   : GRANT GOLDSWORTH
+ * ID	    : 1164709
+ * PROJECT  : A29
+ * DUE DATE : 3/9/2020
+*******************************************/
+
 #include <iostream>
 #include <windows.h>
 using namespace std;
