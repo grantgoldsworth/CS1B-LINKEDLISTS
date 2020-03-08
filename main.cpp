@@ -50,15 +50,26 @@ int main() {
 				break;
 				
 			case '3':
-				cout << "Contents of the list:\n";
-				cout << "[ ";
-				print(head);
-				cout << "]\n";
+			    if (isEmptyList(head)) {
+                    cout << "List is empty.\n";
+                }
+			    else {
+                    cout << "Contents of the list:\n";
+                    cout << "[ ";
+                    print(head);
+                    cout << "]\n";
+
+			    }
 				system("pause");
 				break;
 
             case '4':
-                cout << "Elements in linked list: " << length(*head) << endl;
+                if (!isEmptyList(head)) {
+                    cout << "Elements in linked list: " << length(*head) << endl;
+                }
+                else {
+                    cout << "List is empty.\n";
+                }
                 system("pause");
                 break;
 
