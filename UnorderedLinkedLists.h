@@ -18,7 +18,7 @@ struct nodeType {
 	nodeType *next;
 };
 
-char GetChoice(int, int);
+char GetChoice(int, int, char);
 
 
 void initializeList(nodeType *&, nodeType *&, int &);
@@ -56,7 +56,14 @@ void insertLast(nodeType *&, nodeType *&, int &, const int&);
 // last points to the last node in the list,
 // and count is incremented by 1.
 
-void deleteNode(nodeType *&);
+
+void deleteNode(nodeType *&, nodeType *&, int &, const int&);
+//Function to delete deleteItem from the list.
+//Postcondition: If found, the node containing
+// deleteItem is deleted from the list.
+// first points to the first node, last
+// points to the last node of the updated
+// list, and count is decremented by 1
 
 
 

@@ -23,8 +23,9 @@
  *		This function will return a character
  ******************************************************************************/
 
-char GetChoice(int min, // VAL - the minimum choice bound
-               int max) // VAL - the maximum choice bound
+char GetChoice(int min, 
+               int max,
+			   char flag = 't') 
                {
 
     string  input;
@@ -38,12 +39,25 @@ char GetChoice(int min, // VAL - the minimum choice bound
         // convert first component of input string to integer - will be garbage
         // if it is not an integer!
         // try to make a way to read in all components until reach a non-digit char?? (can process 2+ digit options, like 11)
-        integerInput = (int)input[0] - 48;
-
-        invalidInput = (!isdigit(input[0]) ||
-                       (integerInput < min || integerInput > max)
-                       );
-
+		
+		integerInput = (int)input[0] - 48;
+		
+		if (tolower(flag) == 't') {
+			
+			invalidInput = ((!isdigit(input[0]) 
+						   ||
+						   (integerInput < min || integerInput > max)) 
+						   && 
+						   (tolower(input[0]) != 'q')
+						   );
+		}
+		else {
+			invalidInput = (!isdigit(input[0]) ||
+						   (integerInput < min || integerInput > max)
+						   );
+		}
+		
+		
         // output error message for out of bounds / 'non-integer' input
         if (invalidInput) {
             cout << "*** Invalid Input - Please enter a valid choice. *** \n";
@@ -190,7 +204,6 @@ int  length(const nodeType head){
  * 			max   : pointer to the tail node of the list, any value
  * 			count : the number of elements in the list
  *
- * 			deleteNode  : a function to completely delete a single node
  *
  * POST-CONDITIONS
  *		This function returns nothing.
@@ -201,10 +214,15 @@ int  length(const nodeType head){
 //Postcondition: first = nullptr, last = nullptr, count = 0;
 void destroyList(nodeType *&head, nodeType *&tail, int &count) {
 
+	nodeType * current = nullptr;
+
     while (head != nullptr) {
-        deleteNode(head);
+		current = head;
+        head = head->next;
+		delete current;
     }
 
+	head = nullptr;
 	tail = nullptr;
 	count = 0;
 }
@@ -331,16 +349,11 @@ void insertLast(nodeType *&head, nodeType *&tail, int &count, const int& newItem
 
 
 /******************************************************************************
- * FUNCTION - destroyList
+ * FUNCTION - deleteNode
  * ____________________________________________________________________________
- * This function receives a nodeType pointer. It will delete the node pointed
- * to by parameter node, including the dynamic memory.
- * NOTE: in current development stage, node must effectively be the head pointer -
- * the next value is adjusted as if it is. Will not work on a different
- * node.
+ * 
  * PRE-CONDITIONS
  * 		Following must be defined prior to function call:
- * 			node    : pointer to the node to delete, must be the head pointer
  *
  * POST-CONDITIONS
  *		This function returns nothing.
@@ -349,16 +362,49 @@ void insertLast(nodeType *&head, nodeType *&tail, int &count, const int& newItem
  *		    node points to the next node
  ******************************************************************************/
 
-void deleteNode(nodeType *& node) {
-    nodeType * current;
-    current = node;
-
-    if(isEmptyList((node))) {
-        cout << "List is empty. Nothing to delete.\n";
-    }
-    else {
-        current = node;
-        node = node->next;
-        delete current;
-    }
+void deleteNode(nodeType *&head, nodeType *&tail, int &count, const int& deleteItem) {
+	nodeType *current  = nullptr;
+	nodeType *previous = nullptr;
+	
+	current = head;
+	bool found = false;
+	
+	// case 1 : list is empty
+	if (isEmptyList(head)) {
+		cout << "The list is empty. Can not delete node.\n";
+	}
+	
+	// case 2: deleteItem is in head node
+	else if (deleteItem == head->info) {
+		current = head;
+		head = head->next;
+		
+		delete current;
+		current = nullptr;
+	}
+	
+	// case 3: deleteItem is somewhere in list besides head node
+	else {
+		while (current != nullptr && !found) {
+			if (current->info == deleteItem) {
+				previous = current->next;
+				delete current;
+				current = nullptr;
+				found == true;
+				count --;
+			}
+			else {
+				previous = current;
+				current = current->next;
+			} // end if (current->info == deleteItem) else
+			
+		} // end while (current != nullptr && !found)
+		
+		if (!found) {
+			cout << "The item '" << deleteItem << "' was not found in the list.\n";
+		}
+		
+			
+	} // end if (isEmptyList) else if (deleteItem == head->info) else
+	
 }

@@ -56,22 +56,25 @@ int main() {
 	do { // while (choice != 8) -- main menu driver
 		// output the main menu
 		cout << "\n\t\t-----[ LINKED LIST STUFF ]-----\n\n";
-		cout << "[1] initializeList\n";
-		cout << "[2] isEmptyList\n";
-		cout << "[3] print\n";
-		cout << "[4] length\n";
-		cout << "[5] destroyList\n";
+		cout << "[0] initializeList\n";
+		cout << "[1] isEmptyList\n";
+		cout << "[2] print\n";
+		cout << "[3] length\n";
+		cout << "[4] destroyList\n";
+		cout << "[5] search\n";
 		cout << "[6] insertFirst\n";
 		cout << "[7] insertLast\n";
-		cout << "[8] Exit\n\n";
+		cout << "[8] deleteNode\n";
+		cout << "[9] copyList\n";
+		cout << "[Q] Exit\n\n";
 		
-		choice = GetChoice(1, 8);
+		choice = GetChoice(0, 9, 't');
 		cout << endl;
 		
 		switch (choice) {
 
 		    /* INITIALIZE THE LIST */
-			case '1':
+			case '0':
 				initializeList(head, tail, count);
                 cout << "List has been initialized.\n\n";
                 initialized = true;
@@ -79,7 +82,7 @@ int main() {
 				break;
 
             /* CHECK IF LIST IS EMPTY */
-			case '2':
+			case '1':
 				if (isEmptyList(head)) {
 				    cout << "The list is empty.\n";
 				}
@@ -90,7 +93,7 @@ int main() {
 				break;
 
             /* OUTPUT CONTENTS OF LIST IF NOT EMPTY */
-			case '3':
+			case '2':
 			    if (isEmptyList(head)) {
                     cout << "List is empty.\n";
                 }
@@ -105,7 +108,7 @@ int main() {
 				break;
 
             /* OUTPUT NUMBER OF ELEMENTS IN THE LIST */
-            case '4':
+            case '3':
                 if (!isEmptyList(head)) {
                     cout << "Elements in linked list: " << length(*head) << endl;
                 }
@@ -116,7 +119,7 @@ int main() {
                 break;
 
             /* DESTROY THE LIST */
-            case '5':
+            case '4':
                 if (!isEmptyList(head)) {
                     cout << "Destroying list...\n";
                     destroyList(head, tail, count);
@@ -130,7 +133,7 @@ int main() {
 				break;
 
             /* HEAD APPEND A NODE */
-			case '6':
+			case '5':
 			    if (initialized) {
                     cout << "Insert a node to the front of the list\n";
                     cout << "Enter data for node: ";
@@ -145,7 +148,7 @@ int main() {
 				break;
 
             /* TAIL APPEND A NODE */
-		    case '7':
+		    case '6':
 		        if (initialized) {
                     cout << "Insert a node to the end of the list\n";
                     cout << "Enter data for node: ";
@@ -166,7 +169,7 @@ int main() {
 		cout << endl;
 		system("cls");
 		
-	}while (choice != '8');
+	}while (choice != 'q');
 	
 	
     return 0;
