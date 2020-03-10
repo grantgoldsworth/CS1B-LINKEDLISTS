@@ -23,49 +23,21 @@
  *		This function will return a character
  ******************************************************************************/
 
-char GetChoice(int min, 
-               int max,
-			   char flag = 't') 
+int GetChoice(int min,
+               int max)
                {
 
-    string  input;
-    int   integerInput;
-    bool  invalidInput;
+    int input;
+    cout << "Enter a selection  [" << min << " - " << max << "]: ";
 
-    do {
-        cout << "Enter a choice [" << min << " - " << max << "]: ";
-        getline(cin, input);
+    while (!(cin >> input) || (input > max || input < min)) {
+        cout << "ERROR - Enter a valid selection [" << min << " - " << max << "]: ";
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
 
-        // convert first component of input string to integer - will be garbage
-        // if it is not an integer!
-        // try to make a way to read in all components until reach a non-digit char?? (can process 2+ digit options, like 11)
-		
-		integerInput = (int)input[0] - 48;
-		
-		if (tolower(flag) == 't') {
-			
-			invalidInput = ((!isdigit(input[0]) 
-						   ||
-						   (integerInput < min || integerInput > max)) 
-						   && 
-						   (tolower(input[0]) != 'q')
-						   );
-		}
-		else {
-			invalidInput = (!isdigit(input[0]) ||
-						   (integerInput < min || integerInput > max)
-						   );
-		}
-		
-		
-        // output error message for out of bounds / 'non-integer' input
-        if (invalidInput) {
-            cout << "*** Invalid Input - Please enter a valid choice. *** \n";
-        }
 
-    } while (invalidInput);
-
-    return input[0];
+    return input;
 }
 
 
@@ -145,7 +117,6 @@ void print(const nodeType head) {
 
 	const nodeType *current = nullptr;
 	current = &head;
-
 
         while (current != nullptr) {
             cout << current->info << " ";
@@ -227,6 +198,44 @@ void destroyList(nodeType *&head, nodeType *&tail, int &count) {
 	count = 0;
 }
 
+
+
+/******************************************************************************
+ * FUNCTION - search
+ * ____________________________________________________________________________
+ * This function receives two nodeType pointers and a search item. It will
+ * traverse the list and return true if the item is found, or false otherwise
+ * ===> returns integer
+ * PRE-CONDITIONS
+ * 		Following must be defined prior to function call:
+ * 			head       : pointer to the head node of the list, any value
+ * 			max        : pointer to the tail node of the list, any value
+ * 			searchItem : the item to search for in the list
+ *
+ *
+ * POST-CONDITIONS
+ *		This function returns a boolean
+ ******************************************************************************/
+
+//Function to determine whether searchItem is in the list.
+//Postcondition: Returns true if searchItem is in the
+// list, otherwise the value false is
+// returned.
+bool search(nodeType *srcHead, const int &searchItem) {
+    nodeType * current = nullptr;
+    current = srcHead;
+
+    bool found;
+
+    // traverse list and check for a match, exit if
+    // one is found
+    while (current != nullptr && !found) {
+        found = (current->info == searchItem);
+        current = current->next;
+    }
+
+    return found;
+}
 
 
 
@@ -351,24 +360,38 @@ void insertLast(nodeType *&head, nodeType *&tail, int &count, const int& newItem
 /******************************************************************************
  * FUNCTION - deleteNode
  * ____________________________________________________________________________
- * 
+ * This function gets a head, tail, count, and item to delete for a list and
+ * searches the list for the item. If a node with the item is found,
+ * it deletes the node (first occurance of the item)
  * PRE-CONDITIONS
  * 		Following must be defined prior to function call:
+ * 		    head        : pointer to the head of the list
+ * 		    tail        : pointer to the tail of the list
+ * 		    count       : unofficial number of nodes in the list
+ * 		    deleteItem  : the item to search for and delete from list
  *
  * POST-CONDITIONS
  *		This function returns nothing.
  *		Actual parameters are modified:
- *		    current node is formally deleted
- *		    node points to the next node
+ *		    if target is found:
+ *		        node with target is deleted
+ *		        nodes around deleted node are patched
+ *		        count is decremented
  ******************************************************************************/
 
+//Function to delete deleteItem from the list.
+//Postcondition: If found, the node containing
+// deleteItem is deleted from the list.
+// first points to the first node, last
+// points to the last node of the updated
+// list, and count is decremented by 1
 void deleteNode(nodeType *&head, nodeType *&tail, int &count, const int& deleteItem) {
 	nodeType *current  = nullptr;
 	nodeType *previous = nullptr;
-	
+    bool found = false;
+
 	current = head;
-	bool found = false;
-	
+
 	// case 1 : list is empty
 	if (isEmptyList(head)) {
 		cout << "The list is empty. Can not delete node.\n";
@@ -378,6 +401,12 @@ void deleteNode(nodeType *&head, nodeType *&tail, int &count, const int& deleteI
 	else if (deleteItem == head->info) {
 		current = head;
 		head = head->next;
+		count --;
+
+		// check if 1 - node list
+		if (head == nullptr) {
+		    tail == nullptr;
+		}
 		
 		delete current;
 		current = nullptr;
@@ -385,26 +414,99 @@ void deleteNode(nodeType *&head, nodeType *&tail, int &count, const int& deleteI
 	
 	// case 3: deleteItem is somewhere in list besides head node
 	else {
+		previous = head;
+		current = current->next;
+
+		// search rest of the list, traversing until something is found
+		// or reached the end of the list
 		while (current != nullptr && !found) {
-			if (current->info == deleteItem) {
-				previous = current->next;
-				delete current;
-				current = nullptr;
-				found == true;
-				count --;
-			}
-			else {
-				previous = current;
-				current = current->next;
-			} // end if (current->info == deleteItem) else
-			
+
+		    // traverse list only while having not found a match.
+		    // Exit list if end of list is reached without a match
+
+		    // check if there is a match, and set found to true if so.
+		    if (deleteItem != current->info) {
+		        previous = current;
+		        current = current->next;
+		    }
+		    // found a match
+		    else {
+		        found = true;
+		    }
+		    // if a match is found, loop will exit with current pointing to the match and
+		    // previous pointing to the node before it
 		} // end while (current != nullptr && !found)
-		
-		if (!found) {
-			cout << "The item '" << deleteItem << "' was not found in the list.\n";
-		}
-		
+
+		// post loop processing:
+		//  + check if it is the tail node
+		//  + set the previous pointer to point to the one
+		//    after the deleted
+		//  + delete the target node
+
+        // if match was found
+        if (found) {
+            // update and secure new links
+            previous->next = current->next;
+            count --;
+
+            // if the delete target is the tail, update
+            // the tail to point to the previous node
+            if (tail == current) {
+                tail = previous;
+            }
+
+            // delete the target node
+            delete current;
+        }
+        // not found
+        else {
+            cout << "The item <" << deleteItem << "> was not found in the list\n";
+        }
+
+
 			
 	} // end if (isEmptyList) else if (deleteItem == head->info) else
 	
+}
+
+
+
+
+/******************************************************************************
+ * FUNCTION - copyList
+ * ____________________________________________________________________________
+ * This function will perform a deep copy of the source list into a seperate
+ * linked list. There will be no connection between the lists via pointers.
+ * PRE-CONDITIONS
+ * 		Following must be defined prior to function call:
+ * 		    srcHead     : head of node to copy from
+ * 		    dstHead     : head of node to copy to
+ * 		    dstTail     : tail of node to copy to
+ * 		    dstCount    : the count attribute for destination list
+ *
+ * POST-CONDITIONS
+ *		This function returns nothing.
+ *		Actual parameters are modified:
+ *		    head and tail nodes of destination list are initialized and assigned
+ *		    values of new linked list
+ *		    dstCount is given number of nodes copied over from src
+ *
+ ******************************************************************************/
+
+//Function to make a copy of otherList (src).
+//Postcondition: A copy of otherList(src) is created and
+// assigned to this list (dst).
+void copyList(nodeType *srcHead, nodeType *&dstHead, nodeType *&dstTail, int &dstCount) {
+    nodeType * current = nullptr;
+
+    // initialize destination list
+    dstHead = nullptr;
+    dstTail = nullptr;
+    dstCount = 0;
+
+    current = srcHead;
+    while (current != nullptr) {
+        insertLast(dstHead, dstTail, dstCount, current->info);
+        current = current->next;
+    }
 }

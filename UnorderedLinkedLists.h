@@ -18,7 +18,7 @@ struct nodeType {
 	nodeType *next;
 };
 
-char GetChoice(int, int, char);
+int GetChoice(int, int);
 
 
 void initializeList(nodeType *&, nodeType *&, int &);
@@ -41,6 +41,12 @@ int  length(nodeType);
 void destroyList(nodeType *&, nodeType *&, int &);
 //Function to delete all the nodes from the list.
 //Postcondition: head= NULL, tail = NULL, count = 0;
+
+bool search(nodeType *, const int &);
+//Function to determine whether searchItem is in the list.
+//Postcondition: Returns true if searchItem is in the
+// list, otherwise the value false is
+// returned.
 
 void insertFirst(nodeType *&, nodeType *&, int &, const int &);
 //Function to insert newItem at the end of the list.
@@ -66,6 +72,10 @@ void deleteNode(nodeType *&, nodeType *&, int &, const int&);
 // list, and count is decremented by 1
 
 
+void copyList(nodeType *, nodeType *&, nodeType *&, int &);
+//Function to make a copy of otherList (src).
+//Postcondition: A copy of otherList(src) is created and
+// assigned to this list (dst).
 
 
 #endif
