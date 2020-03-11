@@ -405,7 +405,7 @@ void deleteNode(nodeType *&head, nodeType *&tail, int &count, const int& deleteI
 
 		// check if 1 - node list
 		if (head == nullptr) {
-		    tail == nullptr;
+		    tail = nullptr;
 		}
 		
 		delete current;
