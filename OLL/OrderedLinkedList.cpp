@@ -1,11 +1,11 @@
 /*******************************************
  * AUTHOR   : GRANT GOLDSWORTH
  * ID	    : 1164709
- * PROJECT  : A29
- * DUE DATE : 3/9/2020
+ * PROJECT  : A31
+ * DUE DATE : 3/?/2020
 *******************************************/
 
-#include "UnorderedLinkedLists.h"
+#include "LinkedList.h"
 
 /******************************************************************************
  * FUNCTION - GetChoice
@@ -93,8 +93,6 @@ void initializeList(nodeType *&head, nodeType *&tail, int &count) {
 bool isEmptyList(const nodeType *head) {
 		return (head == nullptr);
 }
-
-
 
 
 /******************************************************************************
@@ -225,15 +223,27 @@ bool search(nodeType *srcHead, const int &searchItem) {
     nodeType * current = nullptr;
     current = srcHead;
 
-    bool found;
+    bool found = false;
+	bool stop = false;
 
-    // traverse list and check for a match, exit if
-    // one is found
-    while (current != nullptr && !found) {
-        found = (current->info == searchItem);
-        current = current->next;
-    }
+	if(!isEmptyList(head)) {
 
+		// traverse list and check for a match, exit if
+		// one is found
+		while (current != nullptr && !stop) {
+			if (current-> info >= searchItem) {
+				stop = true;
+			}
+			else {
+				current = current->next;
+			}
+		}
+
+
+	} // end if (!isEmptyList())
+	else {
+		
+	}
     return found;
 }
 
